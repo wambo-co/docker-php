@@ -40,3 +40,10 @@ RUN cd /tmp/ && git clone https://github.com/xdebug/xdebug.git \
     && touch /usr/local/etc/php/ext-xdebug.ini \
     && rm -r /tmp/xdebug \
     && apt-get purge -y --auto-remove
+
+# Install redis
+ENV PHPREDIS_VERSION 3.0.0
+RUN mkdir -p /usr/src/php/ext/redis \
+    && curl -L https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz | tar xvz -C /usr/src/php/ext/redis --strip 1 \
+    && echo 'redis' >> /usr/src/php-available-exts \
+    && docker-php-ext-install redis
